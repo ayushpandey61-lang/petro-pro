@@ -1,6 +1,29 @@
 version: '3.8'
 
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: petrol-pump-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootpassword}
+      - MYSQL_DATABASE=${DB_NAME:-petrol_pump}
+      - MYSQL_USER=${DB_USER:-petrol_user}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-petrol_password}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/mysql_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    networks:
+      - petrol-pump-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
   backend:
     build:
       context: ./backend
@@ -10,15 +33,19 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=production
-      - DB_TYPE=sqlite
-      - DB_PATH=/app/data/petrol_pump.db
+      - DB_HOST=mysql
+      - DB_USER=${DB_USER:-petrol_user}
+      - DB_PASSWORD=${DB_PASSWORD:-petrol_password}
+      - DB_NAME=${DB_NAME:-petrol_pump}
       - JWT_SECRET=${JWT_SECRET:-your_jwt_secret_key_change_in_production}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY:-your_encryption_key_change_in_production}
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
       - PORT=5000
     volumes:
       - ./backend/logs:/app/logs
-      - sqlite-data:/app/data
+    depends_on:
+      mysql:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - petrol-pump-network
@@ -52,7 +79,7 @@ services:
       start_period: 40s
 
 volumes:
-  sqlite-data:
+  mysql-data:
     driver: local
 
 networks:

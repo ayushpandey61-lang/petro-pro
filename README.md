@@ -2,6 +2,19 @@
 
 A comprehensive petrol pump management system with separate frontend and backend, built with React and Node.js/Express.
 
+## 🚀 Quick Start - MySQL Database
+
+This application now uses **MySQL** as the primary database for better performance, reliability, and scalability.
+
+📖 **[Read Quick Start Guide →](QUICK_START_MYSQL.md)**
+📖 **[Read Detailed MySQL Setup →](MYSQL_SETUP_GUIDE.md)**
+
+### Super Quick Start with Docker
+```bash
+docker-compose up -d
+```
+That's it! Everything is configured automatically.
+
 ## Features
 
 - User authentication and authorization
@@ -10,6 +23,7 @@ A comprehensive petrol pump management system with separate frontend and backend
 - Invoice generation and management
 - Comprehensive reporting system
 - Role-based permissions
+- **MySQL database with 20+ pre-configured tables**
 - Secure API with JWT authentication
 - Encrypted sensitive data
 - Logging and monitoring
@@ -73,27 +87,43 @@ A comprehensive petrol pump management system with separate frontend and backend
 
 ### Backend Setup
 
-1. Navigate to the backend directory:
+1. **Setup MySQL Database**
+   
+   See [`QUICK_START_MYSQL.md`](QUICK_START_MYSQL.md) for MySQL setup instructions.
+   
+   Quick option with Docker:
+   ```bash
+   docker-compose up -d mysql
+   ```
+
+2. Navigate to the backend directory:
    ```bash
    cd backend
    ```
 
-2. Install dependencies:
+3. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Create a `.env` file in the backend directory with the following variables:
+4. The `.env` file in the root directory contains MySQL configuration:
    ```
-   DB_TYPE=sqlite
-   DB_PATH=../petrol_pump.db
+   DB_HOST=localhost
+   DB_USER=petrol_user
+   DB_PASSWORD=petrol_password
+   DB_NAME=petrol_pump
    JWT_SECRET=your_jwt_secret_key
    ENCRYPTION_KEY=your_encryption_key
    FRONTEND_URL=http://localhost:5173
    PORT=5000
    ```
 
-4. Start the backend server:
+5. Initialize database (if not using Docker):
+   ```bash
+   node database/init-mysql.js
+   ```
+
+6. Start the backend server:
    ```bash
    npm start
    ```

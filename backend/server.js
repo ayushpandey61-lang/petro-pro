@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const { connectDB } = require('./lib/sqlite');
+const { testConnection } = require('./lib/database');
 const logger = require('./utils/logger');
 
 const app = express();
@@ -91,9 +91,9 @@ app.listen(PORT, async () => {
 
   // Test database connection
   try {
-    await connectDB();
-    logger.info('✅ SQLite database connection established successfully');
+    await testConnection();
+    logger.info('✅ MySQL database connection established successfully');
   } catch (error) {
-    logger.error('❌ SQLite database connection failed:', error.message);
+    logger.error('❌ MySQL database connection failed:', error.message);
   }
 });

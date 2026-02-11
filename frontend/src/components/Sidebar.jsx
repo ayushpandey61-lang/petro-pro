@@ -99,7 +99,7 @@ const NavItem = ({ item, collapsed }) => {
             animate={{ opacity: 1, width: 'auto' }}
             exit={{ opacity: 0, width: 0 }}
             transition={{ duration: 0.2 }}
-            className="ml-4 whitespace-nowrap font-medium"
+            className="ml-4 whitespace-nowrap font-medium text-[0.9375rem]"
           >
             {label}
           </motion.span>
@@ -159,7 +159,7 @@ const AccordionNavItem = ({ item, collapsed, openAccordion, onAccordionChange })
             animate={{ opacity: 1, width: 'auto' }}
             exit={{ opacity: 0, width: 0 }}
             transition={{ duration: 0.2 }}
-            className="ml-4 whitespace-nowrap font-medium"
+            className="ml-4 whitespace-nowrap font-medium text-[0.9375rem]"
           >
             {label}
           </motion.span>
@@ -173,12 +173,26 @@ const AccordionNavItem = ({ item, collapsed, openAccordion, onAccordionChange })
       <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="flex items-center justify-center p-2 my-1 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+            <div className="flex items-center justify-center p-2 my-1 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/50 cursor-pointer">
               <Icon className="w-5 h-5" />
             </div>
           </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{label}</p>
+          <TooltipContent side="right" className="p-0" sideOffset={10}>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 min-w-[200px]">
+              <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700 font-semibold text-sm text-gray-900 dark:text-gray-100">
+                {label}
+              </div>
+              {filteredSubItems.map((subItem) => (
+                <NavLink
+                  key={subItem.labelKey}
+                  to={subItem.path}
+                  className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                >
+                  <subItem.icon className="w-4 h-4 mr-2" />
+                  <span className="font-medium text-[0.9375rem]">{t(subItem.labelKey)}</span>
+                </NavLink>
+              ))}
+            </div>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

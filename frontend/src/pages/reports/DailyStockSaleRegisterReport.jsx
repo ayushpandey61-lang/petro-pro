@@ -57,8 +57,54 @@ const DailyStockSaleRegisterReport = () => {
       { date: '2025-01-15', tank: 'Tank 2', product: 'Diesel', density: '0.85', temperature: '25°C' }
     ],
     dsrFormat: [
-      { date: '2025-01-15', shift: 'Morning', product: 'Petrol', opening: '10000', received: '5000', sale: '12000', closing: '3000' },
-      { date: '2025-01-15', shift: 'Evening', product: 'Diesel', opening: '8000', received: '3000', sale: '9000', closing: '2000' }
+      { 
+        date: '2025-01-15', 
+        invoiceNo: 'INV001',
+        openingStock: '10000',
+        receipt: '5000',
+        totalStock: '15000',
+        totalMeterSales: '12000',
+        actualSales: '11800',
+        pumpTesting: '200',
+        closingStock: '3000',
+        dipReading: '2950',
+        actualDipStock: '2950',
+        variation: '-50',
+        meterReading1: '25000',
+        sales1: '6000',
+        meterReading2: '31000',
+        sales2: '6000',
+        cumulativeMeterSales: '12000',
+        cumulativeActualSales: '11800',
+        cumulativeTesting: '200',
+        cumulativeVariation: '-50',
+        waterDip: '0',
+        remarks: 'Normal operations'
+      },
+      { 
+        date: '2025-01-15', 
+        invoiceNo: 'INV002',
+        openingStock: '8000',
+        receipt: '3000',
+        totalStock: '11000',
+        totalMeterSales: '9000',
+        actualSales: '8850',
+        pumpTesting: '150',
+        closingStock: '2000',
+        dipReading: '1980',
+        actualDipStock: '1980',
+        variation: '-20',
+        meterReading1: '45000',
+        sales1: '4500',
+        meterReading2: '49500',
+        sales2: '4500',
+        cumulativeMeterSales: '9000',
+        cumulativeActualSales: '8850',
+        cumulativeTesting: '150',
+        cumulativeVariation: '-20',
+        waterDip: '0',
+        remarks: 'All OK'
+      }
     ],
     stockValue: [
       { date: '2025-01-15', product: 'Petrol', stock: '5000 L', rate: '₹95.00', value: '₹475,000.00' },
@@ -113,12 +159,27 @@ const DailyStockSaleRegisterReport = () => {
 
     const headers = [
       { key: 'date', label: 'Date' },
-      { key: 'shift', label: 'Shift' },
-      { key: 'product', label: 'Product' },
-      { key: 'opening', label: 'Opening' },
-      { key: 'received', label: 'Received' },
-      { key: 'sale', label: 'Sale' },
-      { key: 'closing', label: 'Closing' }
+      { key: 'invoiceNo', label: 'Invoice No.' },
+      { key: 'openingStock', label: 'Opening Stock' },
+      { key: 'receipt', label: 'Receipt' },
+      { key: 'totalStock', label: 'Total Stock' },
+      { key: 'totalMeterSales', label: 'Total Meter Sales' },
+      { key: 'actualSales', label: 'Actual Sales' },
+      { key: 'pumpTesting', label: 'Pump Testing' },
+      { key: 'closingStock', label: 'Closing Stock' },
+      { key: 'dipReading', label: 'Dip Reading' },
+      { key: 'actualDipStock', label: 'Actual Dip Stock' },
+      { key: 'variation', label: 'Variation +/-' },
+      { key: 'meterReading1', label: 'Meter Reading 1' },
+      { key: 'sales1', label: 'Sales 1' },
+      { key: 'meterReading2', label: 'Meter Reading 2' },
+      { key: 'sales2', label: 'Sales 2' },
+      { key: 'cumulativeMeterSales', label: 'Cumulative Meter Sales' },
+      { key: 'cumulativeActualSales', label: 'Cumulative Actual Sales' },
+      { key: 'cumulativeTesting', label: 'Cumulative Testing' },
+      { key: 'cumulativeVariation', label: 'Cumulative Variation' },
+      { key: 'waterDip', label: 'Water Dip' },
+      { key: 'remarks', label: 'Remarks' }
     ];
 
     const data = mockData.dsrFormat.map(item => ({
